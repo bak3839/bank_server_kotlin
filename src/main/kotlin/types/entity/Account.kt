@@ -11,8 +11,6 @@ data class Account (
     @Column(name = "ulid", length = 12, nullable = false)
     val ulid : String,
 
-    // TODO
-
     @Column(name = "balance", nullable = false, precision = 15, scale = 2)
     var balance : BigDecimal = BigDecimal.ZERO,
 
@@ -30,6 +28,6 @@ data class Account (
     val updatedAt: LocalDateTime = LocalDateTime.now(),
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_ilid", nullable = false)
+    @JoinColumn(name = "user_ulid", nullable = false)
     val user : User
 )
