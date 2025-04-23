@@ -22,22 +22,22 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
-//    // jwt
-//    implementation("com.auth0:java-jwt:3.12.0")
-//
-//    // mysql
-//    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-//    implementation("mysql:mysql-connector-java:8.0.33")
-//    implementation("org.jetbrains.kotlin:kotlin-reflect")
-//    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    // jwt
+    implementation("com.auth0:java-jwt:3.12.0")
+
+    // mysql
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("mysql:mysql-connector-java:8.0.33")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 //
 //    // security
 //    implementation("org.springframework.boot:spring-boot-starter-web")
 //    implementation("org.springframework.boot:spring-boot-starter-security:3.2.3")
 //
-//    // mongoDB
-//    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-//    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    // mongoDB
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
 //
 //    // client
 //    implementation("com.squareup.okhttp3:okhttp:4.12.0")
