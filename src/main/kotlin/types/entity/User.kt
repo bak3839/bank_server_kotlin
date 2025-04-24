@@ -10,9 +10,6 @@ data class User(
     @Column(name = "ulid", length = 26)
     val ulid: String,
 
-    @Column(name = "platform", nullable = false, length = 25)
-    val platform: String,
-
     @Column(name = "username", nullable = false, unique = true, length = 50)
     val username: String,
 
