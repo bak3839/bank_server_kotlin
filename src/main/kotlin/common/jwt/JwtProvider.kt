@@ -15,8 +15,8 @@ import java.util.Date
 
 @Component
 class JwtProvider(
-    @Value("\${jwt.secret-key") private val secretKey: String,
-    @Value("\${jwt.time") private val time: Long
+    @Value("\${jwt.secret-key}") private val secretKey: String,
+    @Value("\${jwt.time}") private val time: Long
 ) {
     private val ONE_MINUTE_TO_MILLIS: Long = 60 * 1000
 

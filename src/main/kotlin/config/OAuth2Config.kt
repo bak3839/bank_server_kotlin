@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration
  */
 
 @Configuration
-@ConfigurationProperties(prefix = "oauth")
+@ConfigurationProperties(prefix = "oauth2")
 class OAuth2Config {
     val providers: MutableMap<String, OAuth2ProviderValues> = mutableMapOf()
 }
@@ -26,5 +26,5 @@ data class OAuth2ProviderValues(
     // client-id 스프링이 알아서 처리
     val clientId: String,
     val clientSecret: String,
-    val redirectUrl: String
+    val redirectUri: String
 )

@@ -34,7 +34,7 @@ class GithubAuthService (
             .add("code", code)
             .add("client_id", oAuthInfo.clientId)
             .add("client_secret", oAuthInfo.clientSecret)
-            .add("redirect_url", oAuthInfo.redirectUrl)
+            .add("redirect_uri", oAuthInfo.redirectUri)
             .add("grant_type", "authorization_code")
             .build()
 

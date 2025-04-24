@@ -16,6 +16,9 @@ data class User(
     @Column(name = "access_token", length = 255)
     val accessToken: String? = null,
 
+    @Column(name = "created_at", nullable = false, updatable = false)
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+
     @Column(name = "updated_at", nullable = false, updatable = false)
     val updatedAt: LocalDateTime = LocalDateTime.now(),
 
