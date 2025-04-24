@@ -48,4 +48,8 @@ class AuthService(
         // AOP 형태로 작성되면 반환값에 함수값을 붙여줘야함
         return@logFor token
     }
+
+    fun verifyToken(authorization: String) {
+        jwtProvider.verifyToken(authorization.removePrefix("Bearer "))
+    }
 }
