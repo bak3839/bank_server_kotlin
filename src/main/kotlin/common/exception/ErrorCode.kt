@@ -15,5 +15,6 @@ enum class ErrorCode(
     CALL_RESULT_BODY_NULL(-102, "Body is nil"),
     PROVIDER_NOT_FOUND(-103, "Provider not found"),
     TOKEN_IS_INVALID(-104, "Token invalid"),
-    TOKEN_IS_EXPIRED(-105, "Token expired")
+    TOKEN_IS_EXPIRED(-105, "Token expired"),
+    FAILED_TO_INVOKE_IN_LOGGER(-106, "Failed to invoke in logger")
 }
