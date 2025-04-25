@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 @Table(name = "account")
 data class Account (
     @Id
-    @Column(name = "ulid", length = 12, nullable = false)
+    @Column(name = "ulid", length = 26, nullable = false)
     val ulid : String,
 
     @Column(name = "balance", nullable = false, precision = 15, scale = 2)
@@ -24,8 +24,11 @@ data class Account (
     @Column(name = "created_at", nullable = false, updatable = false)
     val createdAt: LocalDateTime = LocalDateTime.now(),
 
-    @Column(name = "updated_at", nullable = false, updatable = false)
+    @Column(name = "updated_at", nullable = false,)
     val updatedAt: LocalDateTime = LocalDateTime.now(),
+
+    @Column(name = "deleted_at")
+    val deletedAt: LocalDateTime? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_ulid", nullable = false)
