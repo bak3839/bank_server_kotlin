@@ -22,4 +22,5 @@ enum class ErrorCode(
     MISS_MATCH_ACCOUNT_ULID_AND_UESR_ULID(-109, "Miss match ulid"),
     ACCOUNT_IS_NOT_ZERO(110, "Account is not zero"),
     FAILED_TO_MUTEX_INVOKE(111, "Failed to mutex invoke"),
+    FILED_TO_GET_LOCK(112, "Filed get lock"),
 }

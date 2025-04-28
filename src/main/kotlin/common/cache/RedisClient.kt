@@ -30,16 +30,24 @@ class RedisClient(
         return template.opsForValue().setIfAbsent(key, value) ?: false
     }
 
-    fun <T> invokeWithMutex(key: String, function: () -> T?) {
+    fun <T> invokeWithMutex(key: String, function: () -> T?) : T? {
         val lock = redissonClient.getLock(key)
+        var lockAcquired = false
 
         try {
-            lock.lock(15, TimeUnit.SECONDS)
-            function.invoke()
+            lockAcquired = lock.tryLock(10, 15, TimeUnit.SECONDS)
+
+            if(!lockAcquired) {
+                throw CustomException(ErrorCode.FILED_TO_GET_LOCK, key)
+            }
+
+            return function.invoke()
         } catch (e: Exception) {
-            throw CustomException(ErrorCode.FAILED_TO_MUTEX_INVOKE, key)
+            throw CustomException(ErrorCode.FAILED_TO_MUTEX_INVOKE, e.message)
         } finally {
-            lock.unlock()
+            if(lockAcquired && lock.isHeldByCurrentThread) {
+                lock.unlock()
+            }
         }
     }
 }
