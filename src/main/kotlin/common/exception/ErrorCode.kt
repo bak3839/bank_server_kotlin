@@ -23,4 +23,6 @@ enum class ErrorCode(
     ACCOUNT_IS_NOT_ZERO(110, "Account is not zero"),
     FAILED_TO_MUTEX_INVOKE(111, "Failed to mutex invoke"),
     FILED_TO_GET_LOCK(112, "Filed get lock"),
+    ENOUGH_VALUE(113, "Enough value"),
+    VALUE_MUST_NOT_BE_UNDER_ZERO(114, "Value must be under zero"),
 }

@@ -6,11 +6,13 @@ import org.redisson.config.Config
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer
 import java.time.Duration
 
@@ -36,14 +38,15 @@ class RedisConfig {
     }
 
     @Bean
+    @Primary
     fun redisTemplate(connectionFactory: RedisConnectionFactory): RedisTemplate<String, String> {
         val template = RedisTemplate<String, String>()
 
         template.connectionFactory = connectionFactory
         template.keySerializer = StringRedisSerializer()
-        template.valueSerializer = StringRedisSerializer()
+        template.valueSerializer = Jackson2JsonRedisSerializer(String::class.java)
         template.hashKeySerializer = StringRedisSerializer()
-        template.hashValueSerializer = StringRedisSerializer()
+        template.hashValueSerializer = Jackson2JsonRedisSerializer(String::class.java)
         template.afterPropertiesSet()
 
         return template
@@ -51,8 +54,8 @@ class RedisConfig {
 
     @Bean
     fun redissonClient(
-        @Value("\${database.redis.host}") host: String,
-        @Value("\${database.redis.timeout:${10000}}") timeout: Int,
+        @Value("\${database.redisson.host}") host: String,
+        @Value("\${database.redisson.timeout:${10000}}") timeout: Int,
     ): RedissonClient {
         val config = Config()
 
