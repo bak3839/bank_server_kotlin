@@ -20,5 +20,6 @@ enum class ErrorCode(
     FAILED_TO_SAVE_DATA(-107, "Failed to save data"),
     FAILED_TO_FIND_ACCOUNT(-108, "Failed to find account"),
     MISS_MATCH_ACCOUNT_ULID_AND_UESR_ULID(-109, "Miss match ulid"),
-    ACCOUNT_IS_NOT_ZERO(110, "Account is not zero")
+    ACCOUNT_IS_NOT_ZERO(110, "Account is not zero"),
+    FAILED_TO_MUTEX_INVOKE(111, "Failed to mutex invoke"),
 }
