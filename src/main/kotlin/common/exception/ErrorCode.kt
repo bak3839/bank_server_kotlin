@@ -25,4 +25,5 @@ enum class ErrorCode(
     FILED_TO_GET_LOCK(112, "Filed get lock"),
     ENOUGH_VALUE(113, "Enough value"),
     VALUE_MUST_NOT_BE_UNDER_ZERO(114, "Value must be under zero"),
+    FAILED_TO_SEND_MESSAGE(115, "Failed to send message"),
 }

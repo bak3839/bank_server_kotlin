@@ -4,7 +4,9 @@ import org.example.common.cache.RedisClient
 import org.example.common.cache.RedisKeyProvider
 import org.example.common.exception.CustomException
 import org.example.common.exception.ErrorCode
+import org.example.common.json.JsonUtil
 import org.example.common.logging.Logging
+import org.example.common.message.KafkaProducer
 import org.example.common.transaction.Transactional
 import org.example.domains.transactions.model.DepositResponse
 import org.example.domains.transactions.model.TransferResponse
@@ -12,6 +14,9 @@ import org.example.domains.transactions.repository.TransactionsAccount
 import org.example.domains.transactions.repository.TransactionsUser
 import org.example.types.dto.Response
 import org.example.types.dto.ResponseProvider
+import org.example.types.entity.Account
+import org.example.types.entity.User
+import org.example.types.message.TransactionMessage
 import org.slf4j.Logger
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
@@ -23,7 +28,8 @@ class TransactionService(
     private val transactionsAccount: TransactionsAccount,
     private val redisClient: RedisClient,
     private val transactional: Transactional,
-    private val logger: Logger = Logging.getLogger(TransactionService::class.java)
+    private val logger: Logger = Logging.getLogger(TransactionService::class.java),
+    private val producer: KafkaProducer
 ) {
     fun deposit(userUlid: String, accountUlid: String, value: BigDecimal): Response<DepositResponse> = Logging.logFor(logger) { log ->
         log["userUlid"] = userUlid
@@ -41,6 +47,19 @@ class TransactionService(
                 account.balance = account.balance.add(value)
                 account.updatedAt = LocalDateTime.now()
                 transactionsAccount.save(account)
+
+                val message = JsonUtil.encodeToJson(TransactionMessage(
+                    fromUlid = "0x0",
+                    fromName = "0x0",
+                    fromAccountID = "0x0",
+                    toUlid = userUlid,
+                    toName = user.username,
+                    toAccountID = accountUlid,
+                    value = value,
+                    time = LocalDateTime.now(),
+                ), TransactionMessage.serializer())
+
+                //producer.sendMessage()
 
                 ResponseProvider.success(DepositResponse(afterBalance = account.balance))
             }
