@@ -26,4 +26,5 @@ enum class ErrorCode(
     ENOUGH_VALUE(113, "Enough value"),
     VALUE_MUST_NOT_BE_UNDER_ZERO(114, "Value must be under zero"),
     FAILED_TO_SEND_MESSAGE(115, "Failed to send message"),
+    FAILED_TO_CONNECT_MONGO(116, "Failed to connect mongo"),
 }
