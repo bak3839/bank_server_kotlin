@@ -7,6 +7,7 @@ import org.example.common.exception.ErrorCode
 import org.example.common.json.JsonUtil
 import org.example.common.logging.Logging
 import org.example.common.message.KafkaProducer
+import org.example.common.message.Topics
 import org.example.common.transaction.Transactional
 import org.example.domains.transactions.model.DepositResponse
 import org.example.domains.transactions.model.TransferResponse
@@ -59,7 +60,7 @@ class TransactionService(
                     time = LocalDateTime.now(),
                 ), TransactionMessage.serializer())
 
-                //producer.sendMessage()
+                producer.sendMessage(Topics.Transactions.topic, message)
 
                 ResponseProvider.success(DepositResponse(afterBalance = account.balance))
             }
@@ -97,6 +98,19 @@ class TransactionService(
 
                 transactionsAccount.save(fromAccount)
                 transactionsAccount.save(toAccount)
+
+                val message = JsonUtil.encodeToJson(TransactionMessage(
+                    fromUlid = fromUlid,
+                    fromName = fromUser.username,
+                    fromAccountID = fromAccountUlid,
+                    toUlid = toAccount.user.ulid,
+                    toName = toAccount.user.username,
+                    toAccountID = toAccountUlid,
+                    value = value,
+                    time = LocalDateTime.now(),
+                ), TransactionMessage.serializer())
+
+                producer.sendMessage(Topics.Transactions.topic, message)
 
                 ResponseProvider.success(
                     TransferResponse(
