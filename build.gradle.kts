@@ -30,11 +30,11 @@ dependencies {
     implementation("mysql:mysql-connector-java:8.0.33")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-//
-//    // security
-//    implementation("org.springframework.boot:spring-boot-starter-web")
-//    implementation("org.springframework.boot:spring-boot-starter-security:3.2.3")
-//
+
+    // security
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-security:3.2.3")
+
     // mongoDB
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
