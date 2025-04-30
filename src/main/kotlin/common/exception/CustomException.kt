@@ -10,5 +10,13 @@ class CustomException(
         "${codeInterface.message} - ${additionalMessage}"
     }
 ) {
+    fun getCodeInterface(): CodeInterface {
+        var codeInterface = codeInterface
 
+        if(additionalMessage != null) {
+            codeInterface.message += additionalMessage.toString()
+        }
+
+        return codeInterface
+    }
 }

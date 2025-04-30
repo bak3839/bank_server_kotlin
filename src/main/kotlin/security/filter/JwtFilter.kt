@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.example.common.exception.CustomException
 import org.example.common.exception.ErrorCode
 import org.example.common.jwt.JwtProvider
 import org.example.types.dto.ResponseProvider
@@ -30,20 +31,40 @@ class JwtFilter(
         val requestURI = request.requestURI
 
         if(shouldPerformAuthentication(requestURI)) {
+            val authHeader = request.getHeader("Authorization")
 
-        } else {
-            response.status = HttpServletResponse.SC_UNAUTHORIZED
-            response.contentType = "application/json"
+            if(authHeader != null && authHeader.startsWith("Bearer ")) {
+                val token = authHeader.substring(7)
 
-            val errResponse = ResponseProvider.failed(
-                code = HttpStatus.UNAUTHORIZED,
-                message = ErrorCode.ACCESS_TOKEN_NEED.message,
-                null
-            )
+                try {
+                    jwtProvider.verifyToken(token)
+                } catch (e: CustomException) {
+                    response.status = HttpServletResponse.SC_UNAUTHORIZED
+                    response.contentType = "application/json"
 
-            response.writer.write(ObjectMapper().writeValueAsString(errResponse))
-            response.writer.flush()
+                    val msg = e.getCodeInterface()
+                    val errResponse = ResponseProvider.failed(
+                        HttpStatus.UNAUTHORIZED,
+                        msg.message,
+                        null
+                    )
+                }
+            } else {
+                response.status = HttpServletResponse.SC_UNAUTHORIZED
+                response.contentType = "application/json"
+
+                val errResponse = ResponseProvider.failed(
+                    code = HttpStatus.UNAUTHORIZED,
+                    message = ErrorCode.ACCESS_TOKEN_NEED.message,
+                    null
+                )
+
+                response.writer.write(ObjectMapper().writeValueAsString(errResponse))
+                response.writer.flush()
+            }
         }
+
+        filterChain.doFilter(request, response)
     }
 
     private fun shouldPerformAuthentication(uri: String): Boolean {
